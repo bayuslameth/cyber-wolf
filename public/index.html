@@ -1,0 +1,918 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#0a0e1a" />
+  <title>CYBERWOLF - Security Simulation System</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Exo+2:wght@300;400;600;700&family=Orbitron:wght@400;600;700;900&display=swap"
+    rel="stylesheet">
+  <link rel="stylesheet" href="styles.css" />
+  <style>
+    /* ═════════════════════════════════════════════════════════════ */
+    /* LANDING PAGE SPECIFIC STYLES                                 */
+    /* ═════════════════════════════════════════════════════════════ */
+
+    .landing-wrapper {
+      position: relative;
+      min-height: 100vh;
+      background-color: var(--bg-0);
+    }
+
+    /* Logo in top-right */
+    .logo-minimal {
+      position: fixed;
+      top: 20px;
+      right: 24px;
+      z-index: 100;
+      font-family: 'Orbitron', sans-serif;
+      font-size: 13px;
+      letter-spacing: 0.25em;
+      color: var(--accent);
+      text-shadow: 0 0 10px rgba(0, 255, 204, 0.6);
+      text-transform: uppercase;
+      font-weight: 700;
+    }
+
+    .landing-content {
+      max-width: 1280px;
+      margin: 0 auto;
+      padding: 0 20px;
+      position: relative;
+      z-index: 1;
+    }
+
+    /* ═════════════════════════════════════════════════════════════ */
+    /* HERO SECTION                                                  */
+    /* ═════════════════════════════════════════════════════════════ */
+
+    .hero-section {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      text-align: center;
+      padding: 40px 20px;
+    }
+
+    .hero-kicker {
+      font-family: 'Orbitron', sans-serif;
+      font-size: 13px;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      color: var(--warn);
+      text-shadow: 0 0 10px rgba(255, 170, 0, 0.5);
+      margin-bottom: 16px;
+      font-weight: 700;
+    }
+
+    .hero-title {
+      font-family: 'Orbitron', sans-serif;
+      font-size: 5.5rem;
+      font-weight: 900;
+      letter-spacing: 0.2em;
+      color: var(--accent);
+      text-shadow: 0 0 20px rgba(0, 255, 204, 0.7);
+      margin: 0 0 12px;
+      line-height: 1;
+      text-transform: uppercase;
+    }
+
+    .hero-subtitle {
+      font-family: 'Orbitron', sans-serif;
+      font-size: 1.4rem;
+      letter-spacing: 0.2em;
+      color: var(--accent-2);
+      text-shadow: 0 0 15px rgba(0, 191, 255, 0.5);
+      margin: 0 0 24px;
+      font-weight: 700;
+      text-transform: uppercase;
+    }
+
+    .hero-desc {
+      font-family: 'Exo 2', sans-serif;
+      font-size: 16px;
+      color: var(--muted);
+      max-width: 600px;
+      margin: 0 auto 48px;
+      line-height: 1.6;
+      letter-spacing: 0.02em;
+    }
+
+    .hero-buttons {
+      display: flex;
+      gap: 16px;
+      justify-content: center;
+      flex-wrap: wrap;
+      margin-bottom: 32px;
+    }
+
+    .btn-hero {
+      padding: 16px 48px;
+      font-size: 14px;
+      font-family: 'Orbitron', sans-serif;
+      font-weight: 700;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      background: transparent;
+      border: 2px solid var(--accent);
+      color: var(--accent);
+      border-radius: 0;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      position: relative;
+      text-shadow: 0 0 8px rgba(0, 255, 204, 0.3);
+    }
+
+    .btn-hero::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(0, 255, 204, 0.6), transparent);
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    }
+
+    .btn-hero:hover {
+      background: rgba(0, 255, 204, 0.12);
+      box-shadow:
+        inset 0 0 10px rgba(0, 255, 204, 0.15),
+        0 0 24px rgba(0, 255, 204, 0.35);
+      color: #ffffff;
+      text-shadow: 0 0 12px rgba(0, 255, 204, 0.8);
+    }
+
+    .btn-hero:hover::before {
+      opacity: 1;
+    }
+
+    .btn-hero.secondary {
+      border-color: var(--accent-2);
+      color: var(--accent-2);
+      text-shadow: 0 0 8px rgba(0, 191, 255, 0.3);
+    }
+
+    .btn-hero.secondary:hover {
+      background: rgba(0, 191, 255, 0.12);
+      box-shadow:
+        inset 0 0 10px rgba(0, 191, 255, 0.15),
+        0 0 24px rgba(0, 191, 255, 0.35);
+      color: #ffffff;
+      text-shadow: 0 0 12px rgba(0, 191, 255, 0.8);
+    }
+
+    .hero-divider {
+      width: 60px;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(0, 255, 204, 0.4), transparent);
+      margin: 24px auto 0;
+    }
+
+    /* ═════════════════════════════════════════════════════════════ */
+    /* SYSTEM INFO PANEL                                             */
+    /* ═════════════════════════════════════════════════════════════ */
+
+    .system-section {
+      padding: 80px 20px;
+      background: linear-gradient(180deg, transparent, rgba(0, 191, 255, 0.03) 50%, transparent);
+    }
+
+    .system-panel {
+      max-width: 900px;
+      margin: 0 auto;
+      background: var(--panel);
+      border: 2px solid var(--accent-2);
+      border-radius: 0;
+      padding: 40px;
+      box-shadow:
+        inset 0 0 1px rgba(0, 191, 255, 0.2),
+        0 0 40px rgba(0, 191, 255, 0.1);
+      position: relative;
+    }
+
+    .system-panel::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(0, 191, 255, 0.5), transparent);
+    }
+
+    .system-panel-title {
+      font-family: 'Orbitron', sans-serif;
+      font-size: 1.6rem;
+      font-weight: 700;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--accent-2);
+      text-shadow: 0 0 12px rgba(0, 191, 255, 0.4);
+      margin: 0 0 24px;
+      padding-bottom: 12px;
+      border-bottom: 1px solid var(--line-soft);
+    }
+
+    .system-panel-content {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 32px;
+    }
+
+    .system-point {
+      display: flex;
+      gap: 16px;
+    }
+
+    .system-icon {
+      font-size: 32px;
+      flex-shrink: 0;
+      filter: drop-shadow(0 0 8px rgba(0, 255, 204, 0.4));
+    }
+
+    .system-info {
+      flex: 1;
+    }
+
+    .system-info-title {
+      font-family: 'Exo 2', sans-serif;
+      font-size: 14px;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      color: var(--accent);
+      text-transform: uppercase;
+      margin: 0 0 6px;
+    }
+
+    .system-info-text {
+      font-size: 14px;
+      color: var(--muted);
+      line-height: 1.5;
+      margin: 0;
+    }
+
+    /* ═════════════════════════════════════════════════════════════ */
+    /* HOW IT WORKS SECTION                                          */
+    /* ═════════════════════════════════════════════════════════════ */
+
+    .works-section {
+      padding: 80px 20px;
+    }
+
+    .section-title {
+      font-family: 'Orbitron', sans-serif;
+      font-size: 2.2rem;
+      font-weight: 700;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--accent);
+      text-shadow: 0 0 15px rgba(0, 255, 204, 0.4);
+      text-align: center;
+      margin: 0 0 60px;
+      padding-bottom: 20px;
+      border-bottom: 1px solid var(--line-soft);
+      max-width: 1000px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    .works-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 20px;
+      max-width: 1000px;
+      margin: 0 auto;
+    }
+
+    .work-step {
+      background: var(--panel-block);
+      border: 1px solid var(--line-soft);
+      border-radius: 0;
+      padding: 32px 24px;
+      text-align: center;
+      transition: all 0.3s ease;
+      position: relative;
+    }
+
+    .work-step::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 2px;
+      background: linear-gradient(90deg, transparent, rgba(0, 255, 204, 0.6), transparent);
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    }
+
+    .work-step:hover {
+      border-color: var(--accent);
+      background: rgba(10, 14, 26, 0.95);
+      box-shadow:
+        inset 0 0 3px rgba(0, 255, 204, 0.1),
+        0 0 20px rgba(0, 255, 204, 0.2);
+    }
+
+    .work-step:hover::before {
+      opacity: 1;
+    }
+
+    .work-step-number {
+      font-family: 'Orbitron', sans-serif;
+      font-size: 2rem;
+      font-weight: 900;
+      color: var(--accent-2);
+      text-shadow: 0 0 10px rgba(0, 191, 255, 0.4);
+      margin-bottom: 12px;
+    }
+
+    .work-step-title {
+      font-family: 'Orbitron', sans-serif;
+      font-size: 14px;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--accent);
+      text-shadow: 0 0 8px rgba(0, 255, 204, 0.3);
+      margin: 0;
+    }
+
+    .work-step-desc {
+      font-size: 13px;
+      color: var(--muted);
+      margin-top: 12px;
+      line-height: 1.4;
+    }
+
+    /* Arrow connector */
+    .work-arrow {
+      display: none;
+      text-align: center;
+      color: var(--accent);
+      font-size: 24px;
+      align-self: center;
+      text-shadow: 0 0 8px rgba(0, 255, 204, 0.3);
+    }
+
+    @media (min-width: 1024px) {
+      .works-grid {
+        grid-template-columns: 1fr auto 1fr auto 1fr auto 1fr;
+        gap: 12px;
+      }
+
+      .work-arrow {
+        display: block;
+      }
+    }
+
+    /* ═════════════════════════════════════════════════════════════ */
+    /* LIVE STATUS SECTION                                           */
+    /* ═════════════════════════════════════════════════════════════ */
+
+    .status-section {
+      padding: 80px 20px;
+      background: linear-gradient(180deg, transparent, rgba(0, 255, 204, 0.03) 50%, transparent);
+    }
+
+    .status-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 20px;
+      max-width: 1000px;
+      margin: 60px auto 0;
+    }
+
+    .status-card {
+      background: var(--panel-block);
+      border: 1px solid var(--line-soft);
+      border-radius: 0;
+      padding: 24px;
+      transition: all 0.3s ease;
+      position: relative;
+    }
+
+    .status-card::before {
+      content: "";
+      position: absolute;
+      left: 0;
+      top: 0;
+      bottom: 0;
+      width: 3px;
+      background: var(--accent);
+      opacity: 0;
+      transition: opacity 0.3s ease;
+      box-shadow: 0 0 12px rgba(0, 255, 204, 0.6);
+    }
+
+    .status-card:hover {
+      border-color: var(--accent);
+      background: rgba(10, 14, 26, 0.95);
+      box-shadow:
+        inset 0 0 3px rgba(0, 255, 204, 0.1),
+        0 0 18px rgba(0, 255, 204, 0.2);
+    }
+
+    .status-card:hover::before {
+      opacity: 1;
+    }
+
+    .status-label {
+      font-family: 'Orbitron', sans-serif;
+      font-size: 11px;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 12px;
+      font-weight: 700;
+    }
+
+    .status-value {
+      font-family: 'Orbitron', sans-serif;
+      font-size: 2.4rem;
+      font-weight: 900;
+      color: var(--accent);
+      text-shadow: 0 0 12px rgba(0, 255, 204, 0.5);
+      margin: 0;
+      line-height: 1;
+    }
+
+    .status-sublabel {
+      font-size: 12px;
+      color: var(--muted);
+      margin-top: 8px;
+    }
+
+    .status-indicator {
+      display: inline-block;
+      width: 8px;
+      height: 8px;
+      background: var(--accent);
+      box-shadow: 0 0 6px rgba(0, 255, 204, 0.8);
+      margin-right: 6px;
+      animation: pulse 2s infinite ease-in-out;
+    }
+
+    @keyframes pulse {
+
+      0%,
+      100% {
+        opacity: 0.8;
+        box-shadow: 0 0 4px rgba(0, 255, 204, 0.6);
+      }
+
+      50% {
+        opacity: 1;
+        box-shadow: 0 0 12px rgba(0, 255, 204, 0.9);
+      }
+    }
+
+    /* ═════════════════════════════════════════════════════════════ */
+    /* JOIN PANEL                                                    */
+    /* ═════════════════════════════════════════════════════════════ */
+
+    .join-section {
+      padding: 80px 20px;
+    }
+
+    .join-container {
+      max-width: 600px;
+      margin: 0 auto;
+      background: var(--panel);
+      border: 2px solid var(--accent);
+      border-radius: 0;
+      padding: 40px;
+      box-shadow:
+        inset 0 0 1px rgba(0, 255, 204, 0.2),
+        0 0 40px rgba(0, 255, 204, 0.1);
+      position: relative;
+    }
+
+    .join-container::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(0, 255, 204, 0.5), transparent);
+    }
+
+    .join-title {
+      font-family: 'Orbitron', sans-serif;
+      font-size: 1.8rem;
+      font-weight: 700;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--accent);
+      text-shadow: 0 0 12px rgba(0, 255, 204, 0.4);
+      margin: 0 0 24px;
+      padding-bottom: 12px;
+      border-bottom: 1px solid var(--line-soft);
+    }
+
+    .join-form {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .form-group {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .form-label {
+      font-family: 'Orbitron', sans-serif;
+      font-size: 12px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--accent-2);
+      text-shadow: 0 0 6px rgba(0, 191, 255, 0.2);
+      margin-bottom: 8px;
+      font-weight: 700;
+    }
+
+    .form-input {
+      background: rgba(10, 14, 26, 0.7);
+      border: 1px solid var(--line-soft);
+      border-radius: 0;
+      padding: 12px 16px;
+      color: var(--accent);
+      font-family: 'Exo 2', sans-serif;
+      font-size: 14px;
+      transition: all 0.3s ease;
+      box-shadow: inset 0 0 2px rgba(0, 0, 0, 0.8);
+    }
+
+    .form-input::placeholder {
+      color: rgba(122, 143, 168, 0.4);
+    }
+
+    .form-input:focus {
+      outline: none;
+      border-color: var(--accent-2);
+      box-shadow:
+        inset 0 0 3px rgba(0, 191, 255, 0.2),
+        0 0 16px rgba(0, 191, 255, 0.3);
+      color: #ffffff;
+    }
+
+    .form-note {
+      font-size: 12px;
+      color: var(--muted);
+      margin-top: 4px;
+      line-height: 1.3;
+    }
+
+    .btn-join {
+      padding: 14px 28px;
+      margin-top: 8px;
+      font-size: 14px;
+      font-family: 'Orbitron', sans-serif;
+      font-weight: 700;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      background: rgba(0, 255, 204, 0.1);
+      border: 1px solid var(--accent);
+      border-radius: 0;
+      color: var(--accent);
+      cursor: pointer;
+      transition: all 0.3s ease;
+      text-shadow: 0 0 8px rgba(0, 255, 204, 0.3);
+    }
+
+    .btn-join:hover {
+      background: rgba(0, 255, 204, 0.15);
+      box-shadow:
+        inset 0 0 8px rgba(0, 255, 204, 0.1),
+        0 0 20px rgba(0, 255, 204, 0.3);
+      color: #ffffff;
+      text-shadow: 0 0 12px rgba(0, 255, 204, 0.8);
+    }
+
+    /* ═════════════════════════════════════════════════════════════ */
+    /* FOOTER                                                        */
+    /* ═════════════════════════════════════════════════════════════ */
+
+    .footer-section {
+      padding: 40px 20px;
+      border-top: 1px solid var(--line-soft);
+      background: linear-gradient(180deg, transparent, rgba(0, 191, 255, 0.02));
+      text-align: center;
+    }
+
+    .footer-text {
+      font-size: 12px;
+      color: var(--muted);
+      margin: 0;
+      letter-spacing: 0.05em;
+    }
+
+    .footer-link {
+      color: var(--accent-2);
+      text-decoration: none;
+      transition: color 0.3s ease;
+    }
+
+    .footer-link:hover {
+      color: var(--accent);
+      text-shadow: 0 0 8px rgba(0, 255, 204, 0.4);
+    }
+
+    /* ═════════════════════════════════════════════════════════════ */
+    /* RESPONSIVE                                                    */
+    /* ═════════════════════════════════════════════════════════════ */
+
+    @media (max-width: 768px) {
+      .hero-title {
+        font-size: 3.2rem;
+      }
+
+      .hero-subtitle {
+        font-size: 1.1rem;
+      }
+
+      .hero-desc {
+        font-size: 14px;
+      }
+
+      .btn-hero {
+        padding: 12px 32px;
+        font-size: 12px;
+      }
+
+      .system-panel-content {
+        grid-template-columns: 1fr;
+        gap: 20px;
+      }
+
+      .section-title {
+        font-size: 1.6rem;
+      }
+
+      .works-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .work-arrow {
+        display: none;
+      }
+
+      .status-grid {
+        grid-template-columns: 1fr;
+        gap: 16px;
+      }
+
+      .join-container {
+        padding: 28px;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .hero-title {
+        font-size: 2.2rem;
+      }
+
+      .hero-subtitle {
+        font-size: 0.9rem;
+      }
+
+      .btn-hero {
+        padding: 10px 24px;
+        font-size: 11px;
+      }
+
+      .system-panel {
+        padding: 24px;
+      }
+
+      .works-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .status-value {
+        font-size: 1.8rem;
+      }
+
+      .join-container {
+        padding: 20px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="landing-wrapper">
+    <!-- Logo -->
+    <div class="logo-minimal">• CYBER</div>
+
+    <!-- Hero Section -->
+    <section class="hero-section">
+      <div class="landing-content">
+        <p class="hero-kicker">REALTIME SECURITY SIMULATION</p>
+        <h1 class="hero-title">CYBERWOLF</h1>
+        <h2 class="hero-subtitle">BREACH PROTOCOL SYSTEM</h2>
+        <p class="hero-desc">
+          Bergabunglah dalam simulasi keamanan siber real-time. Ambil peran sebagai agent keamanan atau
+          malware,
+          diskusi, voting, dan menangkan pertempuran strategis melawan tim lawan.
+        </p>
+        <div class="hero-buttons">
+          <button class="btn-hero" onclick="window.location.href='/game'">INITIATE SESSION</button>
+          <button class="btn-hero secondary"
+            onclick="document.querySelector('.join-section').scrollIntoView({behavior: 'smooth'})">JOIN WITH
+            TOKEN</button>
+        </div>
+        <div class="hero-divider"></div>
+      </div>
+    </section>
+
+    <!-- System Info -->
+    <section class="system-section">
+      <div class="landing-content">
+        <div class="system-panel">
+          <h2 class="system-panel-title">SYSTEM OVERVIEW</h2>
+          <div class="system-panel-content">
+            <div class="system-point">
+              <div class="system-icon">🔐</div>
+              <div class="system-info">
+                <p class="system-info-title">MULTI-ROLE MECHANICS</p>
+                <p class="system-info-text">Dapatkan peran rahasia: Malware, Analyst, Defender, Logic
+                  Bomb, System Admin, atau Regular User.</p>
+              </div>
+            </div>
+            <div class="system-point">
+              <div class="system-icon">⚡</div>
+              <div class="system-info">
+                <p class="system-info-title">REALTIME STRATEGY</p>
+                <p class="system-info-text">Fase siang & malam bergantian. Voting eliminasi di siang
+                  hari, skill khusus di malam hari.</p>
+              </div>
+            </div>
+            <div class="system-point">
+              <div class="system-icon">🎯</div>
+              <div class="system-info">
+                <p class="system-info-title">TEAM VICTORIES</p>
+                <p class="system-info-text">Malware menang jika undetected. Security menang jika semua
+                  malware tereliminasi.</p>
+              </div>
+            </div>
+            <div class="system-point">
+              <div class="system-icon">🌐</div>
+              <div class="system-info">
+                <p class="system-info-title">MULTIPLAYER NETWORK</p>
+                <p class="system-info-text">Bermain dengan teman secara real-time melalui jaringan
+                  Socket.IO yang stabil.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- How It Works -->
+    <section class="works-section">
+      <div class="landing-content">
+        <h2 class="section-title">OPERATIONAL FLOW</h2>
+        <div class="works-grid">
+          <div class="work-step">
+            <div class="work-step-number">01</div>
+            <h3 class="work-step-title">CONNECT</h3>
+            <p class="work-step-desc">Buat atau join room dengan token unik</p>
+          </div>
+          <div class="work-arrow">→</div>
+          <div class="work-step">
+            <div class="work-step-number">02</div>
+            <h3 class="work-step-title">ASSIGN ROLE</h3>
+            <p class="work-step-desc">Sistem memberikan peran rahasia</p>
+          </div>
+          <div class="work-arrow">→</div>
+          <div class="work-step">
+            <div class="work-step-number">03</div>
+            <h3 class="work-step-title">ANALYZE</h3>
+            <p class="work-step-desc">Diskusi & voting untuk identifikasi threat</p>
+          </div>
+          <div class="work-arrow">→</div>
+          <div class="work-step">
+            <div class="work-step-number">04</div>
+            <h3 class="work-step-title">ELIMINATE</h3>
+            <p class="work-step-desc">Tentukan pemenang: Security atau Malware</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Live Status -->
+    <section class="status-section">
+      <div class="landing-content">
+        <h2 class="section-title">SYSTEM STATUS</h2>
+        <div class="status-grid">
+          <div class="status-card">
+            <p class="status-label">ACTIVE LOBBIES</p>
+            <p class="status-value" id="lobbies-count">12</p>
+            <p class="status-sublabel"><span class="status-indicator"></span>WAITING FOR PLAYERS</p>
+          </div>
+          <div class="status-card">
+            <p class="status-label">PLAYERS ONLINE</p>
+            <p class="status-value" id="players-count">48</p>
+            <p class="status-sublabel"><span class="status-indicator"></span>CONNECTED NOW</p>
+          </div>
+          <div class="status-card">
+            <p class="status-label">GAMES COMPLETED</p>
+            <p class="status-value" id="games-count">156</p>
+            <p class="status-sublabel">TODAY'S STATISTICS</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Join Panel -->
+    <section class="join-section">
+      <div class="landing-content">
+        <div class="join-container">
+          <h2 class="join-title">QUICK ACCESS</h2>
+          <form class="join-form" onsubmit="handleJoin(event)">
+            <div class="form-group">
+              <label class="form-label">Agent Name (Nama Agent)</label>
+              <input type="text" class="form-input" id="username" placeholder="e.g., SilverHawk" maxlength="20" />
+              <p class="form-note">Nama tampilan saat bermain dan voting</p>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label">Room Token (Optional)</label>
+              <input type="text" class="form-input" id="room-token" placeholder="e.g., AB12CD" maxlength="16" />
+              <p class="form-note">Kosongkan untuk membuat room baru, atau isi token untuk join room yang
+                ada</p>
+            </div>
+
+            <button type="submit" class="btn-join">INITIATE SECURE CONNECTION</button>
+          </form>
+        </div>
+      </div>
+    </section>
+
+    <!-- Footer -->
+    <section class="footer-section">
+      <p class="footer-text">CYBERWOLF © 2026 |
+        <a href="/game" class="footer-link">PLAY NOW</a> |
+        <a href="/" class="footer-link">HOME</a>
+      </p>
+    </section>
+  </div>
+
+  <script>
+    // Animate status numbers on load
+    document.addEventListener('DOMContentLoaded', function () {
+      animateCounter('lobbies-count', 0, 12, 1500);
+      animateCounter('players-count', 0, 48, 1500);
+      animateCounter('games-count', 0, 156, 1500);
+    });
+
+    function animateCounter(elementId, start, end, duration) {
+      const element = document.getElementById(elementId);
+      const increment = end / (duration / 50);
+      let current = start;
+
+      const timer = setInterval(() => {
+        current += increment;
+        if (current >= end) {
+          element.textContent = end;
+          clearInterval(timer);
+        } else {
+          element.textContent = Math.floor(current);
+        }
+      }, 50);
+    }
+
+    // Join form handler
+    function handleJoin(event) {
+      event.preventDefault();
+      const username = document.getElementById('username').value.trim();
+      const roomToken = document.getElementById('room-token').value.trim();
+
+      if (!username) {
+        alert('Agent Name harus diisi');
+        return;
+      }
+
+      // Redirect ke main game dengan parameter
+      const params = new URLSearchParams({
+        username: username,
+        ...(roomToken && { roomCode: roomToken })
+      });
+
+      window.location.href = `/game?${params.toString()}`;
+    }
+  </script>
+</body>
+
+</html>
