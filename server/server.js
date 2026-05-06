@@ -7,7 +7,13 @@ const { createClient } = require('@supabase/supabase-js');
 
 const app = express();
 const server = http.createServer(app);
-const io = new Server(server);
+// const io = new Server(server);
+
+const io = new Server(httpServer, {
+  cors: {
+    origin: "*", // sementara (biar gampang)
+  }
+})
 
 const PORT = process.env.PORT || 3000;
 
@@ -21,11 +27,11 @@ async function saveGameHistory(room) {
   try {
     const host = [...room.players.values()].find(p => p.isCreator);
     const { error } = await supabase.from('game_history').insert({
-      room_code:    room.code,
-      host:         host ? host.username : 'Unknown',
+      room_code: room.code,
+      host: host ? host.username : 'Unknown',
       player_count: room.players.size,
-      winner:       room.winner,
-      round_count:  room.round,
+      winner: room.winner,
+      round_count: room.round,
     });
     if (error) console.error('[Supabase] saveGameHistory error:', error.message);
     else console.log(`[Supabase] Game history saved: ${room.code} → ${room.winner} wins`);
@@ -222,18 +228,18 @@ function roomViewForPlayer(room, socketId) {
     settings: room.settings,
     me: me
       ? {
-          id: me.id,
-          username: me.username,
-          role: me.role,
-          roleLabel: ROLE_LABEL[me.role],
-          roleDesc: ROLE_DESC[me.role],
-          alive: me.alive,
-          isCreator: me.isCreator,
-          abilities: {
-            sysadminSaveUsed: room.sysadminUsed.save,
-            sysadminKillUsed: room.sysadminUsed.kill,
-          },
-        }
+        id: me.id,
+        username: me.username,
+        role: me.role,
+        roleLabel: ROLE_LABEL[me.role],
+        roleDesc: ROLE_DESC[me.role],
+        alive: me.alive,
+        isCreator: me.isCreator,
+        abilities: {
+          sysadminSaveUsed: room.sysadminUsed.save,
+          sysadminKillUsed: room.sysadminUsed.kill,
+        },
+      }
       : null,
     players,
     status: {
@@ -359,7 +365,7 @@ function eliminatePlayer(room, targetId, reason) {
   if (target.role === 'logicbomb') {
     room.pendingHunterShot = target.id;
     sendLog(room, `${target.username} (Logic Bomb) dapat memilih 1 target untuk ikut terhapus.`);
-    
+
     if (target.isBot) {
       setTimeout(() => simulateBotLogicBomb(room, target), 3000);
     } else {
@@ -612,7 +618,7 @@ function simulateBotLogicBomb(room, botPlayer) {
   const aliveIds = alivePlayers(room).map(p => p.id);
   const targetId = botRandomPick(aliveIds, botPlayer.id);
   if (!targetId) return;
-  
+
   room.pendingHunterShot = null;
   const target = room.players.get(targetId);
   eliminatePlayer(room, target.id, `efek Logic Bomb dari ${botPlayer.username}`);
@@ -623,7 +629,7 @@ function simulateBotLogicBomb(room, botPlayer) {
 function simulateBotDayActions(room) {
   const bots = alivePlayers(room).filter(p => p.isBot);
   const aliveIds = alivePlayers(room).map(p => p.id);
-  
+
   bots.forEach((bot, idx) => {
     // Random chat
     if (Math.random() > 0.5) {
@@ -661,16 +667,16 @@ function simulateBotNightActions(room) {
   const bots = alivePlayers(room).filter(p => p.isBot);
   const aliveList = alivePlayers(room);
   const aliveIds = aliveList.map(p => p.id);
-  
+
   bots.forEach(bot => {
     setTimeout(() => {
       if (room.phase !== 'night' || !bot.alive) return;
-      
+
       if (bot.role === 'malware') {
         const nonMalwareIds = aliveList.filter(p => p.role !== 'malware').map(p => p.id);
         const targetId = botRandomPick(nonMalwareIds.length > 0 ? nonMalwareIds : aliveIds, bot.id);
         if (targetId) room.nightActions.malwareVotes.set(bot.id, targetId);
-      } 
+      }
       else if (bot.role === 'analyst') {
         const targetId = botRandomPick(aliveIds, bot.id);
         if (targetId) room.nightActions.analystTarget = targetId;
@@ -805,7 +811,7 @@ io.on('connection', (socket) => {
 
     const botNames = ['Alpha', 'Beta', 'Gamma', 'Delta', 'Echo', 'Zeta', 'Sigma', 'Omega', 'Neo', 'Trinity'];
     const usedNames = new Set([...room.players.values()].map(p => p.username));
-    
+
     let botName = 'Agent_X';
     for (const name of botNames) {
       const candidate = `Agent_${name}`;
@@ -814,11 +820,11 @@ io.on('connection', (socket) => {
         break;
       }
     }
-    
+
     if (usedNames.has(botName)) botName = `Agent_${Math.floor(Math.random() * 9999)}`;
 
     const botId = `bot_${Date.now()}_${Math.random().toString(36).substring(2, 7)}`;
-    
+
     room.players.set(botId, {
       id: botId,
       username: botName,
